@@ -2,8 +2,8 @@
 PRODUCT_RELEASE_NAME := Nexus7
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 800
+PRODUCT_COPY_FILES += \
+    vendor/plain/prebuilt/bootanimation/800.zip:system/media/bootanimation.zip
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/plain/config/common.mk)
