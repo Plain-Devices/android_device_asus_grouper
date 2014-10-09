@@ -11,6 +11,9 @@ $(call inherit-product, vendor/plain/config/common.mk)
 # Inherit device configuration
 $(call inherit-product, device/asus/grouper/full_grouper.mk)
 
+# Aroma installer device overlay
+$(call inherit-product, device/asus/grouper/aroma/aroma.mk)
+
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := grouper
 PRODUCT_NAME := plain_grouper
