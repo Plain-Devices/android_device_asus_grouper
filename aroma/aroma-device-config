@@ -1,3 +1,92 @@
+menubox(
+    "Plain-Tweaks Customization",
+    "Plain-Tweaks file setup",
+    "@personalize",
+    "ptconfig.prop",
+	"Dont Overwrite Current Tweaks",   "This option will skip Plain-Tweak configuration leaving your current one intact", "icons/apps",
+	"Setup Plain-Tweak",   " ", "icons/apps",
+	"Skip This Step",   " ", "icons/apps"
+);
+if
+file_getprop("/tmp/aroma-data/ptconfig.prop","selected") == "2"
+then
+selectbox(
+	"Plain-Tweak configuration",
+	"Please select a preset or customize",
+	"@personalize",
+	"customize.prop",
+
+	"Choose a preset or customize","",	2,	#-- Group 1		
+	"Gamer",		"1.6Ghz/100Mhz/Lagfree/ROW/Westwood",	1,	#-- item.1.1
+	"Battery Saver",	"1.3Ghz/100Mhz/Wheatley/Deadline/Westwood",	0,	#-- item.1.2
+	"All-Around",		"1.55Ghz/100mhz/Lulzactive/SIO/Cubic",	0,	#-- item.1.3
+	"Super-Smooth",		"1.6Ghz/100Mhz/Lagfree/ROW/HighSpeed",	0,	#-- item.1.4
+	"Kernel Defaults",	"1.3Ghz/100Mhz/OnDemand/Deadline/Westwood",	0,	#-- item.1.5
+	"Customize",		"Proceed to full customization . . .",	0	#-- item.1.5
+);
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "1"
+then
+writetmpfile("deviceconfig.prop",
+	"selected.1=1\n"+
+	"selected.2=2\n"+
+	"selected.3=3\n"+
+	"selected.4=3\n"+
+	"selected.5=1\n"
+);
+endif;
+
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "2"
+then
+writetmpfile("deviceconfig.prop",
+	"selected.1=5\n"+
+	"selected.2=2\n"+
+	"selected.3=1\n"+
+	"selected.4=2\n"+
+	"selected.5=1\n"
+);
+endif;
+
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "3"
+then
+writetmpfile("deviceconfig.prop",
+	"selected.1=2\n"+
+	"selected.2=2\n"+
+	"selected.3=4\n"+
+	"selected.4=5\n"+
+	"selected.5=4\n"
+);
+endif;
+
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "4"
+then
+writetmpfile("deviceconfig.prop",
+	"selected.1=1\n"+
+	"selected.2=2\n"+
+	"selected.3=3\n"+
+	"selected.4=3\n"+
+	"selected.5=5\n"
+);
+endif;
+
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "5"
+then
+writetmpfile("deviceconfig.prop",
+	"selected.1=5\n"+
+	"selected.2=2\n"+
+	"selected.3=6\n"+
+	"selected.4=2\n"+
+	"selected.5=1\n"
+);
+endif;
+
+if
+file_getprop("/tmp/aroma-data/customize.prop","selected.1") == "6"
+then
 selectbox(
 	"Plain-Tweak configuration",
 	"Please select kernel values",
@@ -49,6 +138,7 @@ selectbox(
 	"yeah",			"",	0,	#-- item 5.1
 	"illinois",		"",	0	#-- item 5.1
 );
+endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.1") == "1"
 then
@@ -225,4 +315,13 @@ if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.5") == "13"
 then
     writetmpfile("tcpcong.prop", "tcpcong=illinois\n");
+endif;
+alert(
+    "Current install set for",
+	"Max CPU Clock:"+prop("maxkhz.prop", "maxkhz")+"\n"+
+	"Min CPU Clock:"+prop("minkhz.prop", "minkhz")+"\n"+
+	"IO Scheduler:"+prop("scheduler.prop", "scheduler")+"\n"+
+	"Governor:"+prop("gov.prop", "gov")+"/n"+
+	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")
+);
 endif;
