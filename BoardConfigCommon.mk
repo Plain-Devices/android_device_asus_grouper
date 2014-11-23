@@ -37,7 +37,7 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_CPU_VARIANT := cortex-a9
 
-TARGET_USERIMAGES_USE_F2FS := true
+TARGET_USERIMAGES_USE_EXT4 := true
 
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 681574400
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 6567231488
@@ -80,32 +80,35 @@ endif
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
-BOARD_USES_GROUPER_MODULES := true
-
-# Required for CWM
-BOARD_HAS_NO_SELECT_BUTTON := true
+#BOARD_USES_GROUPER_MODULES := true
 
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
 TARGET_KERNEL_CONFIG := cm_grouper_defconfig
+#TARGET_PREBUILT_KERNEL := device/asus/grouper/kernel
 BOARD_KERNEL_CMDLINE := dt2w=1 s2w=1
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
-BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS += \
         device/asus/grouper/sepolicy
 
-BOARD_SEPOLICY_UNION := \
+BOARD_SEPOLICY_UNION += \
         file_contexts \
         genfs_contexts \
-        app.te \
-        btmacreader.te \
+        bluetooth.te \
         device.te \
+        domain.te \
         drmserver.te \
         init_shell.te \
         file.te \
+        gpsd.te \
+        keystore.te \
+        lmkd.te \
+        mediaserver.te \
         rild.te \
         sensors_config.te \
-        shell.te \
         surfaceflinger.te \
-        system.te \
-        zygote.te
+        system_app.te \
+        system_server.te \
+        ueventd.te \
+        vold.te

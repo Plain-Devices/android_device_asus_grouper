@@ -14,12 +14,6 @@
 # limitations under the License.
 #
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-  LOCAL_KERNEL := kernel/tegra/arch/arm/boot/zImage
-else
-  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
 PRODUCT_AAPT_CONFIG := normal large tvdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := tvdpi
 
@@ -29,6 +23,10 @@ PRODUCT_PROPERTY_OVERRIDES := \
     wifi.supplicant_scan_interval=15 \
     tf.enable=y \
     drm.service.enabled=true
+
+# libhwui flags
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.hwui.render_dirty_regions=false
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -67,6 +65,13 @@ PRODUCT_COPY_FILES += \
     device/asus/grouper/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
 
 PRODUCT_PACKAGES := \
+    libwpa_client \
+    hostapd \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
+
+PRODUCT_PACKAGES += \
     lights.grouper \
     audio.primary.grouper \
     power.grouper \
@@ -74,7 +79,6 @@ PRODUCT_PACKAGES := \
     audio.usb.default \
     audio.r_submix.default \
     librs_jni \
-    setup_fs \
     l2ping \
     hcitool \
     bttest \
@@ -87,8 +91,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     nfc.grouper \
     Nfc \
-    Tag \
-    com.android.nfc_extras
+    Tag
+
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    e2fsck \
+    setup_fs
 
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
@@ -101,6 +109,9 @@ PRODUCT_COPY_FILES += \
 
 # media codec config xml file
 PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     device/asus/grouper/media_codecs.xml:system/etc/media_codecs.xml
 
 # audio mixer paths
@@ -113,17 +124,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
-    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
-
-# NFCEE access control
-ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := device/asus/grouper/nfcee_access.xml
-else
-    NFCEE_ACCESS_PATH := device/asus/grouper/nfcee_access_debug.xml
-endif
-PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
 WIFI_BAND := 802_11_BG
  $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
