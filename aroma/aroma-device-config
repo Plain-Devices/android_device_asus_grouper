@@ -354,8 +354,8 @@ alert(
 	"Max CPU Clock:"+prop("maxkhz.prop", "maxkhz")+"\n"+
 	"Min CPU Clock:"+prop("minkhz.prop", "minkhz")+"\n"+
 	"IO Scheduler:"+prop("scheduler.prop", "scheduler")+"\n"+
-	"Governor:"+prop("gov.prop", "gov")+"/n"+
-	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")+"/n"+
+	"Governor:"+prop("gov.prop", "gov")+"\n"+
+	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")+"\n"+
  	"Unset values will revert to kernel default"
 );
 endif;
