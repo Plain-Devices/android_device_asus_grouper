@@ -3,8 +3,9 @@ menubox(
     "Plain-Tweaks file setup",
     "@personalize",
     "ptconfig.prop",
-	"Dont Overwrite Current Tweaks",   "This option will skip Plain-Tweak configuration leaving your current one intact", "icons/apps",
-	"Setup Plain-Tweak",   " ", "icons/apps",
+	"Dont Overwrite Current Tweaks",   "Skip Plain-Tweak configuration leaving your current one intact", "icons/apps",
+	"Setup Plain-Tweak",   "Reset current configuration", "icons/apps",
+	"Remove Plain-Tweak",   "Remove current configuration", "icons/apps",
 	"Skip This Step",   " ", "icons/apps"
 );
 if
@@ -94,17 +95,19 @@ selectbox(
 	"deviceconfig.prop",
 
 	"Maximum cpu clockrate","",	2,	#-- Group 1		
-	"1.6Ghz",		"",	1,	#-- item.1.1
+	"1.6Ghz",		"",	0,	#-- item.1.1
 	"1.55Ghz",		"",	0,	#-- item.1.2
 	"1.5Ghz",		"",	0,	#-- item.1.3
 	"1.4Ghz",		"",	0,	#-- item.1.4
 	"1.3Ghz",		"",	0,	#-- item.1.5
+	"Kernel Default",	"",	1,
 
 	"Minimum cpu clockrate","",	2,	#-- Group 2		
-	"51Mhz",		"",	1,	#-- item 2.1
+	"51Mhz",		"",	0,	#-- item 2.1
 	"102Mhz",		"",	0,	#-- item 2.2
 	"204Mhz",		"",	0,	#-- item 2.2
 	"340Mhz",		"",	0,	#-- item 2.2
+	"Kernel Default",	"",	1,
 
 	"Governor selection",	"",	2,	#-- Group 3
 	"wheatley",		"",	0,	#-- item 3.1
@@ -113,7 +116,8 @@ selectbox(
 	"lulzactive",		"",	0,	#-- item 3.4
 	"conservative",		"",	0,	#-- item 3.5
 	"ondemand",		"",	0,	#-- item 3.6
-	"interactive",		"",	1,	#-- item 3.7
+	"interactive",		"",	0,	#-- item 3.7
+	"Kernel Default",	"",	1,
 
 	"IO Scheduler selection","",	2,	#-- Group 4
 	"noop",			"",	0,	#-- item 4.1
@@ -122,6 +126,7 @@ selectbox(
 	"cfq",			"",	0,	#-- item 4.1
 	"sio",			"",	0,	#-- item 4.1
 	"bfq",			"",	0,	#-- item 4.1
+	"Kernel Default",	"",	1,
 
 	"TCP Congestion Control selection","",2,#-- Group 5
 	"westwood",		"",	1,	#-- item 5.1
@@ -136,7 +141,8 @@ selectbox(
 	"scalable",		"",	0,	#-- item 5.1
 	"lp",			"",	0,	#-- item 5.1
 	"yeah",			"",	0,	#-- item 5.1
-	"illinois",		"",	0	#-- item 5.1
+	"illinois",		"",	0,	#-- item 5.1
+	"Kernel Default",	"",	1
 );
 endif;
 if
@@ -165,6 +171,12 @@ then
     writetmpfile("maxkhz.prop", "maxkhz=1300000\n");
 endif;
 if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.1") == "6"
+then
+    writetmpfile("maxkhz.prop", "\n");
+endif;
+
+if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.2") == "1"
 then
     writetmpfile("minkhz.prop", "minkhz=51000\n");
@@ -183,6 +195,11 @@ if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.2") == "4"
 then
     writetmpfile("minkhz.prop", "minkhz=340000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.2") == "5"
+then
+    writetmpfile("minkhz.prop", "\n");
 endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.3") == "1"
@@ -220,6 +237,11 @@ then
     writetmpfile("gov.prop", "gov=interactive\n");
 endif;
 if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.3") == "8"
+then
+    writetmpfile("gov.prop", "\n");
+endif;
+if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.4") == "1"
 then
     writetmpfile("scheduler.prop", "scheduler=noop\n");
@@ -251,6 +273,12 @@ if
 then
     writetmpfile("scheduler.prop", "scheduler=bfq\n");
 endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.4") == "7"
+then
+    writetmpfile("scheduler.prop", "\n");
+endif;
+
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.5") == "1"
 then
@@ -316,12 +344,18 @@ if
 then
     writetmpfile("tcpcong.prop", "tcpcong=illinois\n");
 endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.5") == "14"
+then
+    writetmpfile("tcpcong.prop", "\n");
+endif;
 alert(
     "Current install set for",
 	"Max CPU Clock:"+prop("maxkhz.prop", "maxkhz")+"\n"+
 	"Min CPU Clock:"+prop("minkhz.prop", "minkhz")+"\n"+
 	"IO Scheduler:"+prop("scheduler.prop", "scheduler")+"\n"+
 	"Governor:"+prop("gov.prop", "gov")+"/n"+
-	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")
+	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")+"/n"+
+ 	"Unset values will revert to kernel default"
 );
 endif;
