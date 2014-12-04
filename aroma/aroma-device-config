@@ -173,7 +173,7 @@ endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.1") == "6"
 then
-    writetmpfile("maxkhz.prop", "\n");
+    writetmpfile("maxkhz.prop", "maxkhz=\n");
 endif;
 
 if
@@ -199,7 +199,7 @@ endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.2") == "5"
 then
-    writetmpfile("minkhz.prop", "\n");
+    writetmpfile("minkhz.prop", "minkhz=\n");
 endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.3") == "1"
@@ -239,7 +239,7 @@ endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.3") == "8"
 then
-    writetmpfile("gov.prop", "\n");
+    writetmpfile("gov.prop", "gov=\n");
 endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.4") == "1"
@@ -276,7 +276,7 @@ endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.4") == "7"
 then
-    writetmpfile("scheduler.prop", "\n");
+    writetmpfile("scheduler.prop", "scheduler=\n");
 endif;
 
 if
@@ -347,7 +347,7 @@ endif;
 if
 	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.5") == "14"
 then
-    writetmpfile("tcpcong.prop", "\n");
+    writetmpfile("tcpcong.prop", "tcpcong=\n");
 endif;
 alert(
     "Current install set for",
