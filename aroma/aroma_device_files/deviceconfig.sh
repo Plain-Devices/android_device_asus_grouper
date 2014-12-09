@@ -10,3 +10,6 @@ cat /tmp/aroma-data/maxkhz.prop >> /sdcard/plaintweak
 cat /tmp/aroma-data/tcpcong.prop >> /sdcard/plaintweak
 cat /tmp/aroma-data/minkhz.prop >> /sdcard/plaintweak
 cat /tmp/aroma-data/scheduler.prop >> /sdcard/plaintweak
+cat /tmp/aroma-data/gov2.prop >> /sdcard/plaintweak
+cat /tmp/aroma-data/maxkhz2.prop >> /sdcard/plaintweak
+cat /tmp/aroma-data/minkhz2.prop >> /sdcard/plaintweak

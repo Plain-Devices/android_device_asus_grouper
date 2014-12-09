@@ -1,0 +1,31 @@
+<@center><u>MaxKhz  MinKhz  Governor  Scheduler</u>
+
+<b><u>Gamer</u></b>
+1.6Ghz  100Mhz  Lagfree  ROW
+Cores 3/4
+<*>No changes</*>
+<b>TCP Congestion Control:</b> Westwood
+
+<b><u>Battery Saver</u></b>
+1.3Ghz  100Mhz  Wheatley  Deadline
+Cores 3/4
+<*>No changes</*>
+<b>TCP Congestion Control:</b> Westwood
+
+<b><u>All-Around</u></b>
+1.55Ghz  100mhz  Lulzactive  SIO
+Cores 3/4
+<*>No Changes</*>
+<b>TCP Congestion Control:</b> Cubic
+
+<b><u>Super Smooth</u></b>
+1.6Ghz  100Mhz  Lagfree  ROW
+Cores 3/4
+<*>No changes</*>
+<b>TCP Congestion Control:</b> HighSpeed
+
+<b><u>Kernel Defaults</u></b>
+1.3Ghz  100Mhz  OnDemand  Deadline
+Cores 3/4
+<*>No changes</*>
+<b>TCP Congestion Control:</b> Westwood</@>

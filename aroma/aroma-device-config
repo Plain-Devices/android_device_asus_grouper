@@ -11,6 +11,10 @@ menubox(
 if
 file_getprop("/tmp/aroma-data/ptconfig.prop","selected") == "2"
 then
+textdialog(
+    "<@center>Plain-Tweak Presets</@>",
+    zipread("aroma_device/presets.txt")
+);
 selectbox(
 	"Plain-Tweak configuration",
 	"Please select a preset or customize",
@@ -18,11 +22,11 @@ selectbox(
 	"customize.prop",
 
 	"Choose a preset or customize","",	2,	#-- Group 1		
-	"Gamer",		"1.6Ghz/100Mhz/Lagfree/ROW/Westwood",	1,	#-- item.1.1
-	"Battery Saver",	"1.3Ghz/100Mhz/Wheatley/Deadline/Westwood",	0,	#-- item.1.2
-	"All-Around",		"1.55Ghz/100mhz/Lulzactive/SIO/Cubic",	0,	#-- item.1.3
-	"Super-Smooth",		"1.6Ghz/100Mhz/Lagfree/ROW/HighSpeed",	0,	#-- item.1.4
-	"Kernel Defaults",	"1.3Ghz/100Mhz/OnDemand/Deadline/Westwood",	0,	#-- item.1.5
+	"Gamer",		"",	1,	#-- item.1.1
+	"Battery Saver",	"",	0,	#-- item.1.2
+	"All-Around",		"",	0,	#-- item.1.3
+	"Super-Smooth",		"",	0,	#-- item.1.4
+	"Kernel Defaults",	"",	0,	#-- item.1.5
 	"Customize",		"Proceed to full customization . . .",	0	#-- item.1.5
 );
 if
@@ -94,7 +98,7 @@ selectbox(
 	"@personalize",
 	"deviceconfig.prop",
 
-	"Maximum cpu clockrate","",	2,	#-- Group 1		
+	"Maximum cpu clockrate","Cores 1 & 2",	2,	#-- Group 1		
 	"1.6Ghz",		"",	0,	#-- item.1.1
 	"1.55Ghz",		"",	0,	#-- item.1.2
 	"1.5Ghz",		"",	0,	#-- item.1.3
@@ -102,14 +106,14 @@ selectbox(
 	"1.3Ghz",		"",	0,	#-- item.1.5
 	"Kernel Default",	"",	1,
 
-	"Minimum cpu clockrate","",	2,	#-- Group 2		
+	"Minimum cpu clockrate","Cores 1 & 2",	2,	#-- Group 2		
 	"51Mhz",		"",	0,	#-- item 2.1
 	"102Mhz",		"",	0,	#-- item 2.2
 	"204Mhz",		"",	0,	#-- item 2.2
 	"340Mhz",		"",	0,	#-- item 2.2
 	"Kernel Default",	"",	1,
 
-	"Governor selection",	"",	2,	#-- Group 3
+	"Governor selection",	"Cores 1 & 2",	2,	#-- Group 3
 	"wheatley",		"",	0,	#-- item 3.1
 	"Scary",		"",	0,	#-- item 3.2
 	"lagfree",		"",	0,	#-- item 3.3
@@ -142,6 +146,31 @@ selectbox(
 	"lp",			"",	0,	#-- item 5.1
 	"yeah",			"",	0,	#-- item 5.1
 	"illinois",		"",	0,	#-- item 5.1
+	"Kernel Default",	"",	1,
+
+	"Maximum cpu clockrate","Cores 3 & 4",	2,	#-- Group 1		
+	"1.6Ghz",		"",	0,	#-- item.1.1
+	"1.55Ghz",		"",	0,	#-- item.1.2
+	"1.5Ghz",		"",	0,	#-- item.1.3
+	"1.4Ghz",		"",	0,	#-- item.1.4
+	"1.3Ghz",		"",	0,	#-- item.1.5
+	"Kernel Default",	"",	1,
+
+	"Minimum cpu clockrate","Cores 3 & 4",	2,	#-- Group 2		
+	"51Mhz",		"",	0,	#-- item 2.1
+	"102Mhz",		"",	0,	#-- item 2.2
+	"204Mhz",		"",	0,	#-- item 2.2
+	"340Mhz",		"",	0,	#-- item 2.2
+	"Kernel Default",	"",	1,
+
+	"Governor selection",	"Cores 3 & 4",	2,	#-- Group 3
+	"wheatley",		"",	0,	#-- item 3.1
+	"Scary",		"",	0,	#-- item 3.2
+	"lagfree",		"",	0,	#-- item 3.3
+	"lulzactive",		"",	0,	#-- item 3.4
+	"conservative",		"",	0,	#-- item 3.5
+	"ondemand",		"",	0,	#-- item 3.6
+	"interactive",		"",	0,	#-- item 3.7
 	"Kernel Default",	"",	1
 );
 endif;
@@ -349,13 +378,112 @@ if
 then
     writetmpfile("tcpcong.prop", "tcpcong=\n");
 endif;
-alert(
-    "Current install set for",
-	"Max CPU Clock:"+prop("maxkhz.prop", "maxkhz")+"\n"+
-	"Min CPU Clock:"+prop("minkhz.prop", "minkhz")+"\n"+
-	"IO Scheduler:"+prop("scheduler.prop", "scheduler")+"\n"+
-	"Governor:"+prop("gov.prop", "gov")+"\n"+
-	"TCP Congestion Control:"+prop("tcpcong.prop", "tcpcong")+"\n"+
- 	"Unset values will revert to kernel default"
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "1"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=1600000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "2"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=1550000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "3"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=1500000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "4"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=1400000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "5"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=1300000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.6") == "6"
+then
+    writetmpfile("maxkhz2.prop", "maxkhz2=\n");
+endif;
+
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.7") == "1"
+then
+    writetmpfile("minkhz2.prop", "minkhz2=51000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.7") == "2"
+then
+    writetmpfile("minkhz2.prop", "minkhz2=102000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.7") == "3"
+then
+    writetmpfile("minkhz2.prop", "minkhz2=204000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.7") == "4"
+then
+    writetmpfile("minkhz2.prop", "minkhz2=340000\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.7") == "5"
+then
+    writetmpfile("minkhz2.prop", "minkhz2=\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "1"
+then
+    writetmpfile("gov2.prop", "gov2=wheatley\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "2"
+then
+    writetmpfile("gov2.prop", "gov2=scary\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "3"
+then
+    writetmpfile("gov2.prop", "gov2=lagfree\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "4"
+then
+    writetmpfile("gov2.prop", "gov2=lulzactive\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "5"
+then
+    writetmpfile("gov2.prop", "gov2=conservative\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "6"
+then
+    writetmpfile("gov2.prop", "gov2=ondemand\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "7"
+then
+    writetmpfile("gov2.prop", "gov2=interactive\n");
+endif;
+if
+	file_getprop("/tmp/aroma-data/deviceconfig.prop","selected.8") == "8"
+then
+    writetmpfile("gov2.prop", "gov2=\n");
+endif;
+textdialog(
+    "Selected Plain-Tweak configuration",
+	"Max CPU Clock:\n\tCores 1 & 2: "+prop("maxkhz.prop", "maxkhz")+
+	"\n\tCores 3 & 4: "+prop("maxkhz2.prop", "maxkhz2")+"\n"+
+	"Min CPU Clock\n\tCores 1 & 2: "+prop("minkhz.prop", "minkhz")+
+	"\n\tCores 3 & 4: "+prop("minkhz2.prop", "minkhz2")+"\n\n"+
+	"IO Scheduler: "+prop("scheduler.prop", "scheduler")+"\n\n"+
+	"Governor:\n\tCores 1 & 2: "+prop("gov.prop", "gov")+
+	"\n\tCores 3 & 4: "+prop("gov2.prop", "gov2")+"\n\n"+
+	"TCP Congestion Control: "+prop("tcpcong.prop", "tcpcong")+"\n\n\n"+
+	"<@center>Unset values will revert to kernel default</@>"
 );
 endif;
