@@ -80,12 +80,15 @@ endif
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
-#BOARD_USES_GROUPER_MODULES := true
+BOARD_USES_GROUPER_MODULES := true
+
+# Required for CWM
+BOARD_HAS_NO_SELECT_BUTTON := true
 
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
 TARGET_KERNEL_CONFIG := cm_grouper_defconfig
-#TARGET_PREBUILT_KERNEL := device/asus/grouper/kernel
-BOARD_KERNEL_CMDLINE := dt2w=1 s2w=1
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
+
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 

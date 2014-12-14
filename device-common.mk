@@ -14,6 +14,12 @@
 # limitations under the License.
 #
 
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+  LOCAL_KERNEL := kernel/tegra/arch/arm/boot/zImage
+else
+  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
 PRODUCT_AAPT_CONFIG := normal large tvdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := tvdpi
 
@@ -35,7 +41,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
 PRODUCT_COPY_FILES += \
-    device/asus/grouper/fstab.grouper:root/fstab.grouper \
     device/asus/grouper/ueventd.grouper.rc:root/ueventd.grouper.rc \
     device/asus/grouper/init.grouper.usb.rc:root/init.grouper.usb.rc \
     device/asus/grouper/gps.conf:system/etc/gps.conf
@@ -125,14 +130,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
-
-# Device Hardware Info
-PRODUCT_CHIPSET := Nvidia Tegra 3
-PRODUCT_CPU := Quad-core 1.2 GHz Cortex-A9
-PRODUCT_GPU := ULP GeForce
-PRODUCT_FRONT_CAM := 1.2 MP 1280 x 960 pixels
-PRODUCT_SCREEN_SIZE := 7.0in ~216 ppi pixel density LED-backlit IPS
-PRODUCT_SCREEN_RES := 800 x 1280
 
 WIFI_BAND := 802_11_BG
  $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
